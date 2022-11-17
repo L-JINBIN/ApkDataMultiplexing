@@ -118,7 +118,7 @@ V2V3SchemeSigner.sign(new File("output.apk"), new JksSignatureKey("test.jks", "1
 
 ### V1 签名
 
-先用 apksig 进行签名，然后进行数据复用优化。
+先用 apksig 进行 V1 签名，然后进行数据复用优化。
 
 ### V2 / V3 签名
 
@@ -128,7 +128,7 @@ V2V3SchemeSigner.sign(new File("output.apk"), new JksSignatureKey("test.jks", "1
 
 ### V1 + V2 / V3 签名
 
-先用 apksig 进行签名，然后进行数据复用优化，最后使用 `V2V3SchemeSigner` 再次签名。
+先用 apksig 进行 V1 + V2 / V3 签名，然后进行数据复用优化，最后使用 `V2V3SchemeSigner` 再次签名。
 
 ## 致谢
 
