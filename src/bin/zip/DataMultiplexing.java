@@ -105,7 +105,7 @@ public class DataMultiplexing {
         }
     }
 
-    private static ZipFile collectChildren(ZipFile outer, ZipEntry hostEntry, Set<String> children) {
+    private static ZipFile collectChildren(ZipFile outer, ZipEntry hostEntry, Set<String> children) throws IOException {
         try (ZipFile inner = openEntryAsZipFile(outer, hostEntry)) {
             for (ZipEntry outerEntry : outer.getEntries()) {
                 if (outerEntry == hostEntry || outerEntry.isDirectory()) {
@@ -142,9 +142,6 @@ public class DataMultiplexing {
                 }
             }
             return children.isEmpty() ? null : inner;
-        } catch (Exception e) {
-            children.clear();
-            return null;
         }
     }
 
