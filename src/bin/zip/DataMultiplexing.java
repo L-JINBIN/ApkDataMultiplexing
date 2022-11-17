@@ -1,5 +1,8 @@
 package bin.zip;
 
+import bin.mt.apksign.V2V3SchemeSigner;
+import bin.mt.apksign.key.JksSignatureKey;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -9,10 +12,11 @@ import java.util.*;
 
 public class DataMultiplexing {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         File input = new File("test.apk");
         File output = new File("output.apk");
         optimize(input, output, "assets/base.apk", true);
+        V2V3SchemeSigner.sign(output, new JksSignatureKey("test.jks", "123456", "123456", "123456"), true, true);
         System.out.println("Check " + isZipFileContentEquals(input, output));
     }
 

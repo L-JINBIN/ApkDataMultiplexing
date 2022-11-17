@@ -24,13 +24,13 @@ import static bin.mt.apksign.ByteArrayUtil.*;
 /**
  * @author Bin
  */
-class V2V3SchemeSigner {
+public class V2V3SchemeSigner {
     private static final int ANDROID_COMMON_PAGE_ALIGNMENT_BYTES = 0x1000;
     private static final int VERITY_PADDING_BLOCK_ID = 0x42726577;
     private static final int APK_SIGNATURE_SCHEME_V2_BLOCK_ID = 0x7109871a;
     private static final int APK_SIGNATURE_SCHEME_V3_BLOCK_ID = 0xf05368c0;
 
-    static void sign(File file, SignatureKey signatureKey, boolean enableV2, boolean enableV3) throws Exception {
+    public static void sign(File file, SignatureKey signatureKey, boolean enableV2, boolean enableV3) throws Exception {
         if (!enableV2 && !enableV3) {
             throw new RuntimeException();
         }
