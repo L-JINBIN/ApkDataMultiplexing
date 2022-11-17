@@ -84,7 +84,15 @@
 
 源码无任何依赖，方便移植与修改，可直接复制到你的项目，并调用以下方法。
 
-`DataMultiplexing.optimize("test.apk", "output.apk", "assets/base.apk", true);`
+``` Java
+DataMultiplexing.optimize("test.apk", "output.apk", "assets/base.apk", true);
+```
+
+V2 / V3 签名必须在优化之后进行，并且必须使用 `V2V3SchemeSigner`，否则优化会失效，关于签名的更多信息请看后面的说明。
+
+``` Java
+V2V3SchemeSigner.sign(new File("output.apk"), new JksSignatureKey("test.jks", "123456", "123456", "123456"), true, true);
+```
 
 另外输出的文件已经过 ZipAlign，不建议进行其它处理，否则很可能导致失去优化效果。
 
