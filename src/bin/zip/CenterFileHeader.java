@@ -21,6 +21,7 @@ class CenterFileHeader implements Comparable<CenterFileHeader> {
     long dataOffset;
     boolean isDirectory;
     boolean isUtf8;
+    boolean isHost;
     boolean sizeNeedZip64;
     boolean offsetNeedZip64;
 

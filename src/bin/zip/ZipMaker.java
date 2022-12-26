@@ -188,6 +188,7 @@ public class ZipMaker implements Closeable {
         int savedMethod = method;
         method = METHOD_STORED;
         putNextEntry(name);
+        currentHeader.isHost = true;
         method = savedMethod;
         return new HostEntryHolder(zipFile);
     }
@@ -252,8 +253,15 @@ public class ZipMaker implements Closeable {
         }
         // zipAlign
         if (header.method == METHOD_STORED) {
+            int alignment;
+            if (header.isHost || new String(header.name, ZipConstant.UTF_8).endsWith(".so")) {
+                // -p: memory page alignment for stored shared object files
+                alignment = 4096;
+            } else {
+                alignment = 4;
+            }
             long extraDataOffset = _getFilePointer() + 2 + header.name.length;
-            extra = align(header.name, extra, extraDataOffset);
+            extra = align(alignment, extra, extraDataOffset);
         }
         _writeShort(extra.length);
         _writeBytes(header.name);
@@ -371,14 +379,7 @@ public class ZipMaker implements Closeable {
         archive.close();
     }
 
-    private byte[] align(byte[] name, byte[] extra, long extraDataOffset) throws IOException {
-        int alignment;
-        if (new String(name, ZipConstant.UTF_8).endsWith(".so")) {
-            // -p: memory page alignment for stored shared object files
-            alignment = 4096;
-        } else {
-            alignment = 4;
-        }
+    private byte[] align(int alignment, byte[] extra, long extraDataOffset) throws IOException {
         if (isAligned(extraDataOffset + extra.length, alignment)) {
             return extra;
         }
