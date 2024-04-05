@@ -187,8 +187,9 @@ public class ZipMaker implements Closeable {
         }
         int savedMethod = method;
         method = METHOD_STORED;
-        putNextEntry(name);
-        currentHeader.isHost = true;
+        CenterFileHeader centerFileHeader = new CenterFileHeader(name);
+        centerFileHeader.isHost = true;
+        putNextEntry(centerFileHeader);
         method = savedMethod;
         return new HostEntryHolder(zipFile);
     }

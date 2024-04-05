@@ -132,9 +132,12 @@ public class DataMultiplexing {
                     continue;
                 }
                 // 必须4k对齐
-                if (innerEntry.getMethod() == ZipMaker.METHOD_STORED && innerEntry.getDataOffset() % 4 != 0) {
+                if (innerEntry.getMethod() == ZipMaker.METHOD_STORED) {
                     String name = innerEntry.getName();
-                    if (name.equals("resources.arsc") || name.endsWith(".so")) {
+                    if (name.equals("resources.arsc") && innerEntry.getDataOffset() % 4 != 0) {
+                        continue;
+                    }
+                    if (name.endsWith(".so") && innerEntry.getDataOffset() % 4096 != 0) {
                         continue;
                     }
                 }
